@@ -23,7 +23,7 @@ AutoAlarm is an Android application that automates the process of setting multip
 2. The user enters the desired interval between alarms
 3. The user indicates how many alarms they want to set
 4. The app automatically calculates the alarm times
-5. MultiAlarm uses the device's default alarm app to set the alarms
+5. AutoAlarm uses the device's default alarm app to set the alarms
 
 ### Compatibility
 
@@ -68,7 +68,7 @@ AutoAlarm è un'applicazione Android che automatizza il processo di impostazione
 2. L'utente inserisce l'intervallo desiderato tra le sveglie
 3. L'utente indica quante sveglie desidera impostare
 4. L'app calcola automaticamente gli orari delle sveglie
-5. MultiSveglia utilizza l'app sveglia predefinita del dispositivo per impostare le sveglie
+5. AutoAlarm utilizza l'app sveglia predefinita del dispositivo per impostare le sveglie
 
 ### Compatibilità
 
