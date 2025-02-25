@@ -1,15 +1,16 @@
 package com.example.autoalarm
 
-import android.R
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.pm.PackageManager
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import android.util.Log
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -17,7 +18,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
 
         val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_notification_overlay)
+            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
             .setContentTitle("AutoAlarm")
             .setContentText("È ora di svegliarsi!")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -37,6 +38,19 @@ class AlarmReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
+        try {
+            // Controllo permessi prima di mostrare la notifica
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                    notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
+                } else {
+                    Log.e("AlarmReceiver", "Permesso notifiche non concesso")
+                }
+            } else {
+                notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
+            }
+        } catch (e: Exception) {
+            Log.e("AlarmReceiver", "Errore nell'invio della notifica: ${e.message}")
+        }
     }
 }
