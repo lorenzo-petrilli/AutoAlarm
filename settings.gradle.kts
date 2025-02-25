@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "autoalarm"
+rootProject.name = "AutoAlarm"
 include(":app")

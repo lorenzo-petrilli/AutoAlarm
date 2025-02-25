@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.autoalarm"
+    namespace = "com.example.AutoAlarm"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.autoalarm"
+        applicationId = "com.example.AutoAlarm"
         minSdk = 23
         targetSdk = 34
         versionCode = 1

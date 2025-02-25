@@ -1,4 +1,4 @@
-package com.example.autoalarm.ui.theme
+package com.example.AutoAlarm.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

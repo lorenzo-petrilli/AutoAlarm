@@ -1,4 +1,4 @@
-package com.example.autoalarm
+package com.example.AutoAlarm
 
 import android.content.Context
 import android.content.Intent
