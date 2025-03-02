@@ -13,6 +13,7 @@ class AlarmAutomation(private val context: Context) {
     private var pendingAlarms = mutableListOf<Calendar>()
     private var currentAlarmId = 0
     private val dateFormat = SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.getDefault())
+    private val alarmPersistence = AlarmPersistence(context)
 
     fun setAlarms(startTime: Calendar, interval: Int, count: Int) {
         pendingAlarms.clear()
@@ -27,15 +28,47 @@ class AlarmAutomation(private val context: Context) {
                     add(Calendar.DAY_OF_MONTH, 1)
                 }
             }
-            pendingAlarms.add(alarmTime)
             
-            val timeString = dateFormat.format(alarmTime.time)
-            Log.d("AlarmAutomation", "Sveglia #${i+1} programmata per: $timeString")
+            // Verifica se esiste già una sveglia a questo orario
+            if (!alarmExistsAtTime(alarmTime)) {
+                pendingAlarms.add(alarmTime)
+                val timeString = dateFormat.format(alarmTime.time)
+                Log.d("AlarmAutomation", "Sveglia #${i+1} programmata per: $timeString")
+            } else {
+                val timeString = dateFormat.format(alarmTime.time)
+                Log.d("AlarmAutomation", "Sveglia alle $timeString già esistente, saltata")
+                Toast.makeText(context, "Sveglia alle $timeString già esistente", Toast.LENGTH_SHORT).show()
+            }
         }
         
         // Inizia a impostare le sveglie
         currentAlarmId = 0
-        createNextAlarmInClockApp()
+        if (pendingAlarms.isEmpty()) {
+            Toast.makeText(context, "Nessuna nuova sveglia da impostare. Tutte le sveglie sono già impostate.", Toast.LENGTH_SHORT).show()
+        } else {
+            createNextAlarmInClockApp()
+        }
+    }
+
+    // Verifica se esiste già una sveglia a questo orario
+    private fun alarmExistsAtTime(time: Calendar): Boolean {
+        val hour = time.get(Calendar.HOUR_OF_DAY)
+        val minute = time.get(Calendar.MINUTE)
+        
+        // Controlla tutte le sveglie salvate
+        val alarmIds = alarmPersistence.getAlarmIds()
+        for (id in alarmIds) {
+            val alarmTime = Calendar.getInstance().apply {
+                timeInMillis = alarmPersistence.getAlarmTime(id)
+            }
+            
+            // Confronta solo ore e minuti
+            if (alarmTime.get(Calendar.HOUR_OF_DAY) == hour && 
+                alarmTime.get(Calendar.MINUTE) == minute) {
+                return true
+            }
+        }
+        return false
     }
 
     fun continueSettingAlarms() {
@@ -53,6 +86,13 @@ class AlarmAutomation(private val context: Context) {
     fun setSingleAlarm(alarmId: Int, alarmTime: Calendar) {
         Log.d("AlarmAutomation", "Impostazione singola sveglia #$alarmId per: ${dateFormat.format(alarmTime.time)}")
         
+        // Verifica se esiste già una sveglia a questo orario
+        if (alarmExistsAtTime(alarmTime)) {
+            Log.d("AlarmAutomation", "Sveglia già esistente a questo orario, operazione annullata")
+            Toast.makeText(context, "Sveglia già esistente a questo orario", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
         val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
             putExtra(AlarmClock.EXTRA_HOUR, alarmTime.get(Calendar.HOUR_OF_DAY))
             putExtra(AlarmClock.EXTRA_MINUTES, alarmTime.get(Calendar.MINUTE))
@@ -64,6 +104,8 @@ class AlarmAutomation(private val context: Context) {
         if (intent.resolveActivity(context.packageManager) != null) {
             try {
                 context.startActivity(intent)
+                // Salva la sveglia creata
+                saveAlarm(alarmId, alarmTime)
             } catch (e: Exception) {
                 Log.e("AlarmAutomation", "Errore durante l'impostazione della sveglia: ${e.message}")
                 Toast.makeText(context, "Errore: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -93,6 +135,10 @@ class AlarmAutomation(private val context: Context) {
                 context.startActivity(intent)
                 val timeString = dateFormat.format(alarmTime.time)
                 Log.d("AlarmAutomation", "Aperta app orologio per sveglia #${currentAlarmId + 1}: $timeString")
+                
+                // Salva la sveglia creata
+                saveAlarm(currentAlarmId + 1, alarmTime)
+                
                 currentAlarmId++
             } catch (e: Exception) {
                 Log.e("AlarmAutomation", "Errore durante l'impostazione della sveglia: ${e.message}")
@@ -105,5 +151,10 @@ class AlarmAutomation(private val context: Context) {
             Toast.makeText(context, "Nessuna app Orologio trovata sul dispositivo", Toast.LENGTH_LONG).show()
             Log.e("AlarmAutomation", "Nessuna app orologio compatibile trovata")
         }
+    }
+    
+    // Salva la sveglia creata
+    private fun saveAlarm(alarmId: Int, alarmTime: Calendar) {
+        alarmPersistence.saveAlarm(alarmId, alarmTime.timeInMillis)
     }
 } 

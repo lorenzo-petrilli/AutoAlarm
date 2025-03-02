@@ -7,6 +7,9 @@ import android.widget.EditText
 import android.widget.TimePicker
 import android.widget.Toast
 import android.widget.TextView
+import android.widget.LinearLayout
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
@@ -16,6 +19,7 @@ import java.util.Locale
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
+import android.view.View
 import com.example.AutoAlarm.R
 import com.example.AutoAlarm.alarm.AlarmAutomation
 
@@ -27,9 +31,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonSetAlarms: Button
     private lateinit var tvGithubLink: TextView
     private lateinit var switchTimeFormat: SwitchCompat
+    private lateinit var lastAlarmLayout: LinearLayout
+    private lateinit var tvLastAlarmTime: TextView
     private lateinit var alarmAutomation: AlarmAutomation
     private lateinit var sharedPreferences: SharedPreferences
     private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    private val dateTimeFormat = SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.getDefault())
     
     // Link al repository GitHub (modifica con il tuo URL)
     private val githubUrl = "https://github.com/lorenzo-petrilli/AutoAlarm"
@@ -50,6 +57,8 @@ class MainActivity : AppCompatActivity() {
         buttonSetAlarms = findViewById(R.id.buttonSetAlarms)
         tvGithubLink = findViewById(R.id.tvGithubLink)
         switchTimeFormat = findViewById(R.id.switchTimeFormat)
+        lastAlarmLayout = findViewById(R.id.lastAlarmLayout)
+        tvLastAlarmTime = findViewById(R.id.tvLastAlarmTime)
 
         alarmAutomation = AlarmAutomation(this)
         
@@ -63,7 +72,24 @@ class MainActivity : AppCompatActivity() {
             setTimePickerFormat(isChecked)
             // Salva la preferenza
             sharedPreferences.edit().putBoolean(KEY_TIME_FORMAT, isChecked).apply()
+            // Aggiorna la visualizzazione dell'ultima sveglia
+            updateLastAlarmDisplay()
         }
+        
+        // Aggiungi listener per i campi di input
+        timePicker.setOnTimeChangedListener { _, _, _ -> updateLastAlarmDisplay() }
+        
+        editTextInterval.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) { updateLastAlarmDisplay() }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+        
+        editTextCount.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) { updateLastAlarmDisplay() }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
         buttonSetAlarms.setOnClickListener {
             setAlarms()
@@ -94,6 +120,42 @@ class MainActivity : AppCompatActivity() {
             Log.e("MainActivity", "Errore durante l'apertura del browser: ${e.message}")
         }
     }
+    
+    private fun updateLastAlarmDisplay() {
+        try {
+            val interval = editTextInterval.text.toString().toIntOrNull() ?: 0
+            val count = editTextCount.text.toString().toIntOrNull() ?: 0
+            
+            if (interval <= 0 || count <= 0) {
+                lastAlarmLayout.visibility = View.GONE
+                return
+            }
+            
+            val startTime = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, timePicker.hour)
+                set(Calendar.MINUTE, timePicker.minute)
+                set(Calendar.SECOND, 0)
+                
+                // Aggiungi automaticamente un giorno se l'ora è già passata oggi
+                if (timeInMillis < System.currentTimeMillis()) {
+                    add(Calendar.DAY_OF_MONTH, 1)
+                }
+            }
+            
+            // Calcola l'orario dell'ultima sveglia
+            val lastAlarmTime = (startTime.clone() as Calendar).apply {
+                add(Calendar.MINUTE, (count - 1) * interval)
+            }
+            
+            // Mostra l'orario dell'ultima sveglia
+            tvLastAlarmTime.text = dateTimeFormat.format(lastAlarmTime.time)
+            lastAlarmLayout.visibility = View.VISIBLE
+            
+        } catch (e: Exception) {
+            Log.e("LastAlarmDisplay", "Errore nel calcolo dell'ultima sveglia", e)
+            lastAlarmLayout.visibility = View.GONE
+        }
+    }
 
     private fun setAlarms() {
         try {
@@ -118,9 +180,15 @@ class MainActivity : AppCompatActivity() {
             
             val timeString = timeFormat.format(startTime.time)
             
+            // Calcola l'orario dell'ultima sveglia
+            val lastAlarmTime = (startTime.clone() as Calendar).apply {
+                add(Calendar.MINUTE, (count - 1) * interval)
+            }
+            val lastAlarmTimeString = dateTimeFormat.format(lastAlarmTime.time)
+            
             AlertDialog.Builder(this)
                 .setTitle("Impostazione Sveglie")
-                .setMessage("Verranno impostate $count sveglie nell'app Orologio, a partire dalle $timeString con intervallo di $interval minuti.\n\nDovrai confermare ogni sveglia quando appare l'app Orologio.")
+                .setMessage("Verranno impostate $count sveglie nell'app Orologio, a partire dalle $timeString con intervallo di $interval minuti.\n\nL'ultima sveglia suonerà alle $lastAlarmTimeString.\n\nSi Aprirà l`app orologio e dovrai solo andare indietro ogni volta che una sveglia viene impostata")
                 .setPositiveButton("Procedi") { _, _ ->
                     alarmAutomation.setAlarms(startTime, interval, count)
                 }

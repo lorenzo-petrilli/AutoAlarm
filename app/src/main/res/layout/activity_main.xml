@@ -89,6 +89,33 @@
             android:inputType="number"
             android:gravity="center"/>
 
+        <!-- Nuovo campo per visualizzare l'ultima sveglia -->
+        <LinearLayout
+            android:id="@+id/lastAlarmLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:visibility="gone">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L'ultima sveglia suonerà alle:"
+                android:textSize="16sp"
+                android:layout_gravity="center"/>
+                
+            <TextView
+                android:id="@+id/tvLastAlarmTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#0066CC"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
         <Button
             android:id="@+id/buttonSetAlarms"
             android:layout_width="250dp"
