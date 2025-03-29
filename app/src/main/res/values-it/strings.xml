@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AutoAlarm</string>
+    
+    <!-- Main UI -->
+    <string name="start_time">Orario di inizio:</string>
+    <string name="format_12h">Formato 12h</string>
+    <string name="format_24h">Formato 24h</string>
+    <string name="interval_minutes">Intervallo (minuti):</string>
+    <string name="number_of_alarms">Numero di sveglie:</string>
+    <string name="last_alarm_will_ring">L\'ultima sveglia suonerà alle:</string>
+    <string name="set_alarms">Imposta Sveglie</string>
+    
+    <!-- Dialogs and messages -->
+    <string name="alarm_setup_title">Impostazione Sveglie</string>
+    <string name="alarm_setup_message">Verranno impostate %1$d sveglie nell\'app Orologio, a partire dalle %2$s con intervallo di %3$d minuti.\n\nL\'ultima sveglia suonerà alle %4$s.\n\nSi aprirà l\'app Orologio e dovrai solo andare indietro ogni volta che una sveglia viene impostata</string>
+    <string name="proceed">Procedi</string>
+    <string name="cancel">Annulla</string>
+    <string name="close">Chiudi</string>
+    <string name="enter_valid_values">Inserisci valori validi positivi per intervallo e numero di sveglie</string>
+    <string name="error_occurred">Si è verificato un errore: %1$s</string>
+    
+    <!-- Menu -->
+    <string name="menu_delete_alarms">Elimina sveglie</string>
+    <string name="menu_about">About</string>
+    
+    <!-- Delete alarms dialog -->
+    <string name="delete_alarms_title">Eliminazione sveglie</string>
+    <string name="delete_alarms_message">Android non permette di eliminare automaticamente le sveglie nell\'app Orologio. Verrà aperta l\'app Orologio, dove potrai eliminare manualmente le sveglie che non desideri più.\n\nL\'app cancellerà comunque i propri riferimenti interni alle sveglie.</string>
+    <string name="open_clock_app">Apri app Orologio</string>
+    <string name="internal_refs_only">Solo riferimenti interni</string>
+    <string name="internal_refs_cleared">Riferimenti interni cancellati</string>
+    <string name="use_swipe_to_delete">Usa il gesto di swipe o il menu per eliminare le sveglie</string>
+    <string name="no_clock_app">Nessuna app Orologio trovata sul dispositivo</string>
+    <string name="error_opening_browser">Impossibile aprire il browser: %1$s</string>
+    <string name="error_opening_clock">Errore durante l\'apertura dell\'app Orologio: %1$s</string>
+    
+    <!-- Alarm automation messages -->
+    <string name="no_alarms_to_set">Nessuna sveglia da impostare.</string>
+    <string name="starting_alarm_setup">Avvio impostazione di %1$d sveglie.\nConferma ogni sveglia nell\'app Orologio.</string>
+    <string name="confirm_alarm">Conferma sveglia %1$d/%2$d (%3$s)</string>
+    <string name="operation_completed">Operazione completata: %1$d sveglie richieste all\'app Orologio.</string>
+    
+    <!-- About screen -->
+    <string name="about_version">Versione 1.0</string>
+    <string name="about_description">Questa app ti permette di impostare facilmente multiple sveglie nell\'app Orologio del tuo dispositivo. Scegli l\'orario di inizio, l\'intervallo e il numero di sveglie da creare.</string>
+    <string name="view_on_github">Visita il progetto su GitHub</string>
+</resources> 

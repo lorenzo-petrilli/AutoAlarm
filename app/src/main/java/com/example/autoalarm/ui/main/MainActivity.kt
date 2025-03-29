@@ -20,6 +20,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.view.View
+import android.view.Menu
+import android.view.MenuItem
+import android.view.LayoutInflater
 import com.example.AutoAlarm.R
 import com.example.AutoAlarm.alarm.AlarmAutomation
 
@@ -29,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editTextInterval: EditText
     private lateinit var editTextCount: EditText
     private lateinit var buttonSetAlarms: Button
-    private lateinit var tvGithubLink: TextView
     private lateinit var switchTimeFormat: SwitchCompat
     private lateinit var lastAlarmLayout: LinearLayout
     private lateinit var tvLastAlarmTime: TextView
@@ -55,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         editTextInterval = findViewById(R.id.editTextInterval)
         editTextCount = findViewById(R.id.editTextCount)
         buttonSetAlarms = findViewById(R.id.buttonSetAlarms)
-        tvGithubLink = findViewById(R.id.tvGithubLink)
         switchTimeFormat = findViewById(R.id.switchTimeFormat)
         lastAlarmLayout = findViewById(R.id.lastAlarmLayout)
         tvLastAlarmTime = findViewById(R.id.tvLastAlarmTime)
@@ -94,11 +95,36 @@ class MainActivity : AppCompatActivity() {
         buttonSetAlarms.setOnClickListener {
             setAlarms()
         }
+    }
+    
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+    
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_about -> {
+                showAboutDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    
+    private fun showAboutDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_about, null)
         
-        // Configurazione click sul link GitHub
-        tvGithubLink.setOnClickListener {
+        // Configura il listener per il link GitHub nel dialog
+        dialogView.findViewById<TextView>(R.id.tvAboutGithubLink).setOnClickListener {
             openGithubPage()
         }
+        
+        AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton(getString(R.string.close)) { dialog, _ -> dialog.dismiss() }
+            .create()
+            .show()
     }
     
     private fun setTimePickerFormat(is24HourFormat: Boolean) {
@@ -116,7 +142,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl))
             startActivity(intent)
         } catch (e: Exception) {
-            Toast.makeText(this, "Impossibile aprire il browser: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_opening_browser, e.message), Toast.LENGTH_SHORT).show()
             Log.e("MainActivity", "Errore durante l'apertura del browser: ${e.message}")
         }
     }
@@ -174,7 +200,7 @@ class MainActivity : AppCompatActivity() {
             val count = editTextCount.text.toString().toIntOrNull()
 
             if (interval == null || count == null || interval <= 0 || count <= 0) {
-                Toast.makeText(this, "Inserisci valori validi positivi per intervallo e numero di sveglie", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.enter_valid_values), Toast.LENGTH_SHORT).show()
                 return
             }
             
@@ -187,16 +213,16 @@ class MainActivity : AppCompatActivity() {
             val lastAlarmTimeString = dateTimeFormat.format(lastAlarmTime.time)
             
             AlertDialog.Builder(this)
-                .setTitle("Impostazione Sveglie")
-                .setMessage("Verranno impostate $count sveglie nell'app Orologio, a partire dalle $timeString con intervallo di $interval minuti.\n\nL'ultima sveglia suonerà alle $lastAlarmTimeString.\n\nSi Aprirà l`app orologio e dovrai solo andare indietro ogni volta che una sveglia viene impostata")
-                .setPositiveButton("Procedi") { _, _ ->
+                .setTitle(getString(R.string.alarm_setup_title))
+                .setMessage(getString(R.string.alarm_setup_message, count, timeString, interval, lastAlarmTimeString))
+                .setPositiveButton(getString(R.string.proceed)) { _, _ ->
                     alarmAutomation.setAlarms(startTime, interval, count)
                 }
-                .setNegativeButton("Annulla", null)
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show()
         } catch (e: Exception) {
             Log.e("SetAlarms", "Errore durante l'impostazione delle sveglie", e)
-            Toast.makeText(this, "Si è verificato un errore: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_occurred, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 } 

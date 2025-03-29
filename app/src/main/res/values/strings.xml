@@ -1,4 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AutoAlarm</string>
+    
+    <!-- Main UI -->
+    <string name="start_time">Start time:</string>
+    <string name="format_12h">12h format</string>
+    <string name="format_24h">24h format</string>
+    <string name="interval_minutes">Interval (minutes):</string>
+    <string name="number_of_alarms">Number of alarms:</string>
+    <string name="last_alarm_will_ring">The last alarm will ring at:</string>
+    <string name="set_alarms">Set Alarms</string>
+    
+    <!-- Dialogs and messages -->
+    <string name="alarm_setup_title">Alarm Setup</string>
+    <string name="alarm_setup_message">%1$d alarms will be set in the Clock app, starting at %2$s with an interval of %3$d minutes.\n\nThe last alarm will ring at %4$s.\n\nThe Clock app will open and you just need to go back each time an alarm is set.</string>
+    <string name="proceed">Proceed</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="enter_valid_values">Enter valid positive values for interval and number of alarms</string>
+    <string name="error_occurred">An error occurred: %1$s</string>
+    
+    <!-- Menu -->
+    <string name="menu_delete_alarms">Delete Alarms</string>
+    <string name="menu_about">About</string>
+    
+    <!-- Delete alarms dialog -->
+    <string name="delete_alarms_title">Delete Alarms</string>
+    <string name="delete_alarms_message">Android does not allow automatically deleting alarms in the Clock app. The Clock app will open, where you can manually delete the alarms you no longer want.\n\nThe app will still clear its internal references to alarms.</string>
+    <string name="open_clock_app">Open Clock App</string>
+    <string name="internal_refs_only">Internal References Only</string>
+    <string name="internal_refs_cleared">Internal references cleared</string>
+    <string name="use_swipe_to_delete">Use swipe gesture or menu to delete alarms</string>
+    <string name="no_clock_app">No Clock app found on device</string>
+    <string name="error_opening_browser">Unable to open browser: %1$s</string>
+    <string name="error_opening_clock">Error opening the Clock app: %1$s</string>
+    
+    <!-- Alarm automation messages -->
+    <string name="no_alarms_to_set">No alarms to set.</string>
+    <string name="starting_alarm_setup">Starting to set %1$d alarms.\nConfirm each alarm in the Clock app.</string>
+    <string name="confirm_alarm">Confirm alarm %1$d/%2$d (%3$s)</string>
+    <string name="operation_completed">Operation completed: %1$d alarms requested in the Clock app.</string>
+    
+    <!-- About screen -->
+    <string name="about_version">Version 1.0</string>
+    <string name="about_description">This app allows you to easily set multiple alarms in your device\'s Clock app. Choose the start time, interval and number of alarms to create.</string>
+    <string name="view_on_github">View project on GitHub</string>
 </resources>
