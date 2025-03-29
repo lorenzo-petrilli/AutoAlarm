@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AutoAlarm"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Versione 1.0"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Questa app ti permette di impostare facilmente multiple sveglie nell'app Orologio del tuo dispositivo. Scegli l'orario di inizio, l'intervallo e il numero di sveglie da creare."
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tvAboutGithubLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Visita il progetto su GitHub"
+        android:textColor="#0066CC"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:layout_gravity="center" />
+
+</LinearLayout> 
