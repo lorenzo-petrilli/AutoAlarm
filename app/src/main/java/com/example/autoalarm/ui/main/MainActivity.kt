@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_about, null)
         
         // Configura il listener per il link GitHub nel dialog
-        dialogView.findViewById<TextView>(R.id.tvAboutGithubLink).setOnClickListener {
+        dialogView.findViewById<Button>(R.id.tvAboutGithubLink).setOnClickListener {
             openGithubPage()
         }
         

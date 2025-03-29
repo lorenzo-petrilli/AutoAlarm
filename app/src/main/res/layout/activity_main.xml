@@ -14,7 +14,7 @@
         android:padding="16dp"
         android:gravity="center_horizontal">
 
-        <TextView
+        <!-- <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
@@ -22,10 +22,10 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="32dp" />
+            android:layout_marginBottom="32dp" /> -->
 
         <!-- Card di selezione orario -->
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -39,9 +39,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/SectionHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/start_time"
-                    android:layout_marginTop="0dp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
                 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -58,7 +62,7 @@
                         android:textSize="14sp"
                         android:textColor="@color/secondary_text" />
                         
-                    <com.google.android.material.switchmaterial.SwitchMaterial
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchTimeFormat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -80,10 +84,10 @@
                     android:timePickerMode="spinner"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
         <!-- Card parametri sveglia -->
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -97,81 +101,79 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/SectionHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/interval_minutes"
-                    android:layout_marginTop="0dp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
+                    android:id="@+id/editTextInterval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:hint="@string/interval_minutes"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextInterval"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:gravity="center" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:gravity="center"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="12dp"
+                    android:layout_marginBottom="16dp" />
 
                 <TextView
-                    style="@style/SectionHeader"
-                    android:text="@string/number_of_alarms" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_of_alarms"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
+                    android:id="@+id/editTextCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:hint="@string/number_of_alarms"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextCount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:gravity="center" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:gravity="center"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="12dp" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
         <!-- Card ultima sveglia -->
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:id="@+id/lastAlarmLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:contentPadding="16dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/card_background"
+            android:elevation="4dp"
+            android:padding="16dp"
             android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:text="@string/last_alarm_will_ring"
+                android:textSize="16sp"
+                android:textColor="@color/secondary_text" />
                 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/last_alarm_will_ring"
-                    android:textSize="16sp"
-                    android:textColor="@color/secondary_text" />
-                    
-                <TextView
-                    android:id="@+id/tvLastAlarmTime"
-                    style="@style/ResultDisplay"
-                    android:layout_marginTop="8dp"
-                    android:textSize="22sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/tvLastAlarmTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/alarm_time"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/buttonSetAlarms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -181,9 +183,8 @@
             android:padding="16dp"
             android:text="@string/set_alarms"
             android:textSize="16sp"
-            app:cornerRadius="12dp"
-            app:elevation="4dp"
-            android:textAllCaps="false" />
+            android:textColor="@color/button_text"
+            android:background="@drawable/button_background" />
 
     </LinearLayout>
 </ScrollView>
