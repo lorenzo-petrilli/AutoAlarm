@@ -1,5 +1,11 @@
 # AutoAlarm
 
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.0-7F52FF?style=flat&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![Android](https://img.shields.io/badge/Android-API%2023+-3DDC84?style=flat&logo=android&logoColor=white)](https://developer.android.com/)
+[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.5.1-4285F4?style=flat&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](https://opensource.org/licenses/MIT)
+[![GitHub release](https://img.shields.io/github/v/release/lorenzo-petrilli/AutoAlarm?style=flat)](https://github.com/lorenzo-petrilli/AutoAlarm/releases)
+
 [English](#english) | [Italiano](#italiano)
 
 ---
@@ -11,7 +17,9 @@
 
 If you've ever found yourself in a situation like this:
 
-![Problem - Too many alarms](https://i.imgur.com/mk51AKQ.png)
+<p align="center">
+  <img src="https://i.imgur.com/mk51AKQ.png" alt="Problem - Too many alarms" width="300"/>
+</p>
 
 Then you know how frustrating it is to set multiple sequential alarms in Android. Managing dozens of alarms becomes a nightmare - setting new ones is a hassle, and finding old ones is even worse.
 
@@ -19,7 +27,9 @@ Then you know how frustrating it is to set multiple sequential alarms in Android
 
 I tried to solve this myself with **AutoAlarm**, an app that allows you to set multiple alarms in one go:
 
-![AutoAlarm App](https://i.imgur.com/qtXiU7V.png)
+<p align="center">
+  <img src="https://i.imgur.com/qtXiU7V.png" alt="AutoAlarm App" width="300"/>
+</p>
 
 ### Features
 
@@ -82,7 +92,9 @@ For questions, suggestions, or bug reports, please open an issue on this GitHub 
 
 Se ti sei mai trovato in una situazione come questa:
 
-![Problema - Troppe sveglie](https://i.imgur.com/mk51AKQ.png)
+<p align="center">
+  <img src="https://i.imgur.com/mk51AKQ.png" alt="Problema - Troppe sveglie" width="300"/>
+</p>
 
 Allora sai quanto sia frustrante impostare più sveglie sequenziali su Android. Gestire decine di sveglie diventa un incubo - impostarne di nuove è un casino, e trovare quelle vecchie è ancora peggio.
 
@@ -90,7 +102,9 @@ Allora sai quanto sia frustrante impostare più sveglie sequenziali su Android. 
 
 Ho cercato di risolvere questo problema da solo con **AutoAlarm**, un'app che ti permette di impostare più sveglie in una sola volta:
 
-![App AutoAlarm](https://i.imgur.com/qtXiU7V.png)
+<p align="center">
+  <img src="https://i.imgur.com/qtXiU7V.png" alt="App AutoAlarm" width="300"/>
+</p>
 
 ### Caratteristiche
 
